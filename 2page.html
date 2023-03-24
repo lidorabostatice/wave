@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Weather App</title>
+        <style>
+            
+            .forecast{
+                margin-top: 8px;
+                font-size: 14px;
+                /* margin-left: 36px; */
+                padding: 16px;
+                display: inline-block;
+                text-align: center;
+            }
+
+
+            .margin{
+                margin-left: 40px;
+            }
+
+            .phone{
+                overflow: hidden;
+                margin-top: 10px;
+                background-color: #FBFBFB;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+                border-radius: 10px;
+                width: 360px;
+                height: 640px;
+            }
+
+
+            #temp_max{
+                display: inline-block;
+                color: black;
+                font-size: 16px;
+            }
+
+            #temp{
+                display: inline-block;
+                color: black;
+                font-size: 32px;
+                margin-top: 20px;
+                margin-left: 40px;
+                font-weight: bold;
+            }
+
+            h1{
+                padding-top:48px;
+                margin-left: 40px;
+                font-size: 20px;
+                color: black;
+            }
+
+            #icon{
+                width: 60px;
+                float: right;
+                margin-right: 20px;
+                margin-top:16px;
+            }
+
+            .middle{
+                vertical-align: middle;
+                text-align: center;
+                height: 140px;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+                margin-left: 20px;
+                margin-right: 20px;
+                margin-top:16px;
+                position: relative;
+                z-index:999;
+                
+            }
+
+            h2{
+                color: #0B3D7B;
+                font-size: 14px;
+                margin-left: 40px;
+                margin-top: 30px;
+                font-weight: bold;
+            }
+
+            .toto{
+                margin-top: -10px;
+            }
+
+            h3{
+                font-size: 14px;
+                color: #4b4b4b;
+                float: left;
+                margin-left: -26px;
+                margin-top: 16px;
+        
+            }
+            h4{
+                float: left;
+                font-size: 16px;
+                color: #999999;
+                margin-top: 60px;
+                margin-left: -38px;
+            }
+            h5{
+                font-size: 14px;
+                color: #4b4b4b;
+                float: left;
+                margin-top: 16px;
+                margin-left: -38px;
+        
+            }
+
+            #feels_like{
+                color: #0B3D7B;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            h6{
+                float: left;
+                z-index: 999;
+                position: relative;
+                font-size: 16px;
+                color: #999999;
+                margin-top: 60px;
+                margin-left: 40px;
+            }
+
+            .hum:not(:first-child){
+                padding-left: 20px;
+            }
+
+            .hum{
+                display: inline-block;
+                padding-top: 35px;
+            }
+
+
+            #humidity{
+                color: #0B3D7B;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            #wind{
+                color: #0B3D7B;
+                font-size: 20px;
+                font-weight: bold;
+            }
+            .forecast-icon{
+                width: 36px;
+            }
+            #sunset{
+                color: #0B3D7B;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            .box {
+                overflow: hidden;
+                border-radius: 10px;
+                margin-top: 100px;
+                width: 360px;
+                height: 240px;
+                transform: translate3d(0, 0, 0);
+                z-index: 9;
+                position: relative;
+                bottom: 200px;
+                }
+
+                .wave {
+                display: inline-block;
+                opacity: 0.3;
+                position: absolute;
+                top: 120%;
+                left: 50%;
+                /*border: 2px solid #1E43B9;*/
+                background: linear-gradient(0deg, #0B3D7B, #b0dea6);
+                opacity: 0.5;
+                width: 500px;
+                height: 500px;
+                margin-left: -250px;
+                margin-top: -250px;
+                transform-origin: 50% 48%;
+                border-radius: 43%;
+                animation: drift 6000ms infinite linear;
+                z-index: 1;
+                }
+
+                .wave.-three {
+                animation: drift 8000ms infinite linear;
+                z-index: 2;
+                opacity: 0.3;
+                }
+
+                .wave.-two {
+                animation: drift 10000ms infinite linear;
+                opacity: 0.1;
+                z-index: 3;
+                }
+
+                .box:after {
+                content: "";
+                display: block;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 11;
+                transform: translate3d(0, 0, 0);
+                }
+
+                @keyframes drift {
+                from {
+                    transform: rotate(0deg);
+                }
+                from {
+                    transform: rotate(360deg);
+                }
+                }
+
+                .CC {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                width: 50px;
+                height: 20px;
+                left: 180px;
+                transform: translateX(-50%);
+                margin-top:-290px;
+                z-index:9999;
+            
+            }
+
+            .container {
+                position: relative;
+                flex-direction: row;
+                text-align: center;
+                justify-content: center;
+                position: absolute;
+               /* left: 50%;
+                transform: translateX(1vw); */
+                width: 24px;
+                height: 24px;
+             }
+
+            .chevron {
+                position: absolute;
+                width: 24px;
+                height: 2px;
+                opacity: 0;
+                transform: scale3d(1);
+                animation: move 3s ease-out infinite;
+            }
+
+            .chevron:first-child {
+                animation: move 3s ease-out 1s infinite;
+            }
+
+            .chevron:before,
+            .chevron:after {
+                content: ' ';
+                position: absolute;
+                top: 0;
+                height: 100%;
+                width: 50%;
+                background: white;
+            }
+
+            .chevron:before {
+                left: 0;
+                transform: skew(0deg, 30deg);
+            }
+
+            .chevron:after {
+                right: 0;
+                width: 50%;
+                transform: skew(0deg, -30deg);
+            }
+
+            @keyframes move {
+                25% {
+                    opacity: 1;
+
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(20px) scale3d(0.5, 0.5, 0.5);
+                }
+            }
+
+            @keyframes pulse {
+                to {
+                    opacity: 1;
+                }
+            }
+            .forecast-icon{
+                width: 36px;
+            }
+
+            .CC2 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                width: 50px;
+                height: 20px;
+                left: 180px;
+                transform: translateX(-50%);
+                margin-top:-870px;
+                z-index:9999;
+            
+            }
+
+            .container2 {
+                position: relative;
+                flex-direction: row;
+                text-align: center;
+                justify-content: center;
+                position: absolute;
+               /* left: 50%;
+                transform: translateX(1vw); */
+                width: 24px;
+                height: 24px;
+             }
+
+            .chevron2 {
+                position: absolute;
+                width: 24px;
+                height: 2px;
+                opacity: 0;
+                transform: scale3d(1);
+                animation: move 3s ease-out infinite;
+            }
+
+            .chevron2:first-child {
+                animation: move 3s ease-out 1s infinite;
+            }
+
+            .chevron2:before,
+            .chevron2:after {
+                content: ' ';
+                position: absolute;
+                top: 0;
+                height: 100%;
+                width: 50%;
+                background: linear-gradient(0deg, #0B3D7B, #b0dea6);
+            }
+
+            .chevron2:before {
+                left: 0;
+                transform: skew(0deg, -30deg);
+            }
+
+            .chevron2:after {
+                right: 0;
+                width: 50%;
+                transform: skew(0deg, 30deg);
+            }
+
+            @keyframes move2 {
+                25% {
+                    opacity: 0;
+
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(-20px) scale3d(0.5, 0.5, 0.5);
+                }
+            }
+
+            @keyframes pulse2 {
+                to {
+                    opacity: 1;
+                }
+            }
+
+        </style>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+    </div>
+        <div class="phone" style="display: none;">
+            <h1>Today</h1>
+                <div id="city"></div>
+                <div id="temp"></div>
+                <div id="temp_max"></div>
+                <img id="icon"></img>
+
+                <!-- <div id="feels_like"></div> -->
+        <div class="toto">
+            <h2>시간대별 날씨</h2>
+        </div>        
+                <div class="middle">
+                    <div id="forecast"></div>
+                </div>
+
+                <div class="toto">
+                    <h2>상세 날씨</h2>
+                </div> 
+
+                <div class="middle">
+                    <div class="hum">
+                        <div class="item">체감온도</div>
+                        <div class="item"><div id="feels_like"></div></div>
+                        <div class="item">°C</div>
+                    </div>
+                    <div class="hum">
+                        <div class="item">습도</div>
+                        <div class="item"><div id="humidity"></div></div>
+                        <div class="item">%</div>
+                    </div>
+                    <div class="hum">
+                        <div class="item">풍속</div>
+                        <div class="item"><div id="wind"></div></div>
+                        <div class="item">m/s</div>
+                    </div>
+                    <div class="hum">
+                        <div class="item">일몰</div>
+                        <div class="item"><div id="sunset"></div></div>
+                        <div class="item">.</div>
+                    </div>
+                </div>
+
+            <div class="box"> 
+                <div class='wave -one'></div>
+                <div class='wave -two'></div>
+                <div class='wave -three'></div>  
+            </div>
+                
+            <a class="page">
+                <div class="CC">
+                    <div class="container">
+                            <div class="chevron"></div>
+                            <div class="chevron"></div>
+                    </div>
+                </div>
+            </a>
+
+            <a class="page2">
+                <div class="CC2">
+                    <div class="container2">
+                            <div class="chevron2"></div>
+                            <div class="chevron2"></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+                
+                
+        </div>
+</div>
+
+        <script>
+
+         $(function(){
+            $('.phone').fadeIn(300);
+            $('.page').click(function(){
+                    $('.phone').fadeOut(300, function(){
+                        window.location.href = '3page.html'
+                    })
+                });
+            
+                $('.page2').click(function(){
+                    $('.phone').fadeOut(300, function(){
+                        window.location.href = 'index.html'
+                    })
+                });
+
+                    $.getJSON('https://api.openweathermap.org/data/2.5/weather?id=1844045&appid=cbe920e0e02d06d37f867ca4bb45d496&units=metric', function(data){
+
+                        console.log(data);
+
+                        let temp = data.main.temp;
+                        let temp_max = data.main.temp_max;
+                        let temp_min = data.main.temp_min;
+                        let weather = data.weather[0].main;
+                        let feels_like = data.main.feels_like;
+                        let humidity = data.main.humidity;
+                        let wind = data.wind.speed;
+
+                        let sunset = data.sys.sunset;
+
+                        let today = moment();
+                        let date = today.format('YYYY-MM-DD(dddd) hh:mm:ss A');
+                        console.log(date);
+
+                        $('#weather').text(weather);
+                        $('#temp').text(temp + '°');
+                        $('#temp_max').text('/ ' + temp_max + '°');
+                        $('#humidity').text(humidity);
+                        $('#wind').text(wind);
+                        $('#feels_like').text(feels_like);
+
+                        let sunset_dt = moment(sunset * 1000);
+                        let sunset_time = sunset_dt.format('HH:mm');
+                        $('#sunset').text(sunset_time);
+                        
+
+                        let iconCode = data.weather[0].icon;
+                        $('#icon').attr('src', 'http://openweathermap.org/img/wn/' + iconCode + '@2x.png');
+
+                        if(iconCode == '02d' || iconCode == '02n' || iconCode == '03d' || iconCode == '03n' || iconCode == '04d' || iconCode == '04n'){
+                        $('.text > h1 > span').text('cloudy')
+                    }
+                    
+                    });
+                             
+                $.getJSON('https://api.openweathermap.org/data/2.5/forecast?id=1844045&appid=cbe920e0e02d06d37f867ca4bb45d496&units=metric', function(data){
+
+                    console.log(data);
+
+                    for(let i=0; i<4; i++){
+                        let dt = data.list[i].dt;
+                        let temp = data.list[i].main.temp;
+                        let weather = data.list[i].weather[0].main;
+
+                        let date = moment(dt * 1000).format('HH:mm');
+
+                        let dom = $('<div class="forecast"></div>');
+                        dom.append('<div>' + date + '</div>');
+
+                        let iconImg = $('<img class="forecast-icon">');
+                        let iconCode = data.list[i].weather[0].icon;
+                        iconImg.attr('src', 'http://openweathermap.org/img/wn/' + iconCode + '@2x.png');
+                        dom.append(iconImg);
+
+                        dom.append('<div>' + weather + '</div>');
+                        dom.append('<div>' + temp +  '°' + '</div>');
+
+
+
+                        $('#forecast').append(dom);
+                    }    
+                });
+
+                // $.get.JSON('http://api.openweathermap.org/data/2.5/air_pollution?lat=37.3236&lon=126.8219&appid=cbe920e0e02d06d37f867ca4bb45d496')
+
+                // cosole.log.data;
+
+                //     let components = data.coord.lon.pm2_5;
+                //     $('#pm2_5').text(pm2_5);
+            }); 
+
+
+            
+        </script>
+    </body>
+</html>

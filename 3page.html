@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Weather App</title>
+        <style>
+            .phone{
+                margin-top: 10px;
+                background-color: #FBFBFB;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+                border-radius: 10px;
+                width: 360px;
+                height: 640px;
+                position:relative;
+                overflow: hidden;
+            }
+
+            h1{
+                color: black;
+                font-size: 20px;
+                font-weight: bold;
+                padding-top: 50px;
+                margin-left: 40px;
+            }
+
+            #date{
+                font-size: 14px;
+                color: black;
+                margin-left: 40px;
+                margin-top:-10px;
+            }
+            .item{
+                margin-left: 17px;
+                margin-top: 20px;
+                display: inline-block;
+                text-align: center;
+                padding: 1px;
+                border-radius: 10px;
+
+                transition: all 0.3s ease-in-out;
+            }
+            .item> h2{
+                font-size: 16px;
+            }
+            .item> p{
+                font-size: 16px;
+                color: #969696;
+                font-weight: bold;
+
+                transition: all 0.3s ease-in-out;
+            }
+
+            .item:hover{
+                color: white;
+                background: #0B3D7B;
+                /* background: linear-gradient(0deg, #0B3D7B, #b0dea6); */
+                
+            }
+
+            .item:hover > p{
+                color: white;
+                /*background: linear-gradient(0deg, #0B3D7B, #b0dea6);
+                border-radius: 10px;*/
+            }
+
+            .dd{
+                margin-left: 20px;
+                margin-right: 0px;
+            }
+
+            .middle{
+                display:block;
+                background-color: white;
+                width: 310px;
+                height: 190px;
+                margin-left: 25px;
+                margin-right: 40px;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+                border-radius:10px;
+                margin-top: 20px;
+
+                overflow: hidden;
+                position: relative;
+                z-index: 9999;
+                transition: all 0.3s ease-in-out;
+            }
+            .middle.open{
+                height: 360px;
+            }
+
+            #weather{
+                color: #363636;
+                font-size: 32px;
+                font-weight: bold;
+                margin-top: 30px;
+                margin-right: 30px;
+                float: right;
+            }
+
+            #temp_minmax{
+                font-size: 20px;
+                font-weight: bold;
+                color: #363636;
+                margin-top: -30px;
+                margin-right: 30px;
+                float: right;
+            }
+
+            .line{
+                margin-top: 20px;
+                margin-left: 30px;
+                width: 280px;
+                border: 1px solid #E9E9E9;
+            }
+
+            #city{
+                font-weight: bold;
+                color: #1E43B9;
+                margin-top: 10px;
+                margin-left: 30px;
+                font-size: 14px;
+            }
+
+
+            #sunset{
+                color: grey;
+                float: left;
+                font-size: 12px;
+                margin-left: 220px;
+                margin-top: -17px;
+            }
+
+            #sunrise{
+                color: grey;
+                float: left;
+                font-size: 12px;
+                margin-left: 150px;
+                margin-top: -17px;
+            }
+
+            .CC {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                width: 50px;
+                height: 100px;
+                margin-left: 120px;
+                margin-top: -30px;
+                bottom:-36px;
+            
+            }
+
+            .container {
+                position: relative;
+                margin-top:10px;
+                width: 20px;
+                height: 20px;
+             }
+
+            .chevron {
+                position: absolute;
+                width: 20px;
+                height: 2px;
+                opacity: 1;
+            }
+
+            .chevron:before,
+            .chevron:after {
+                content: ' ';
+                position: absolute;
+                top: 0;
+                height: 100%;
+                width: 51%;
+                background: #C5C5C5;
+            }
+
+            .chevron:before {
+                left: 0;
+                transform: skew(0deg, 30deg);
+            }
+
+            .chevron:after {
+                right: 0;
+                width: 50%;
+                transform: skew(0deg, -30deg);
+            }
+
+
+            .box {
+                overflow: hidden;
+                border-radius: 10px;
+                margin-top: 100px;
+                width: 360px;
+                height: 240px;
+                transform: translate3d(0, 0, 0);
+                z-index: 9;
+                position: absolute;
+                bottom: -100px;
+                }
+
+                .wave {
+                display: inline-block;
+                opacity: 0.3;
+                position: absolute;
+                top: 120%;
+                left: 50%;
+                /*border: 2px solid #1E43B9;*/
+                background: linear-gradient(0deg, #0B3D7B, #b0dea6);
+                opacity: 0.5;
+                width: 500px;
+                height: 500px;
+                margin-left: -250px;
+                margin-top: -250px;
+                transform-origin: 50% 48%;
+                border-radius: 43%;
+                animation: drift 6000ms infinite linear;
+                z-index: 1;
+                }
+
+                .wave.-three {
+                animation: drift 8000ms infinite linear;
+                z-index: 2;
+                opacity: 0.3;
+                }
+
+                .wave.-two {
+                animation: drift 10000ms infinite linear;
+                opacity: 0.1;
+                z-index: 3;
+                }
+
+                .box:after {
+                content: "";
+                display: block;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 11;
+                transform: translate3d(0, 0, 0);
+                }
+
+                @keyframes drift {
+                from {
+                    transform: rotate(0deg);
+                }
+                from {
+                    transform: rotate(360deg);
+                }
+                }
+
+                .fo{
+                    margin-top:40px;
+                    margin-left: 30px;
+                    color: #1E43B9;
+                    font-weight: 600;
+                }
+                .infor{
+                    margin-left: 30px;
+                    font-weight: bold;
+                    color: #1E43B9;
+                    display: inline-block;
+                }
+
+                .infor2{
+                    margin-left: 12px;
+                    color:#3e3a39;
+                    font-size: 14px;
+                    display: inline-block;
+                }
+
+                .infor3{
+                    margin-left: 12px;
+                    color:#3e3a39;
+                    margin-top: -20px;
+                    font-size: 14px;
+                    display: inline-block;
+                }
+
+                h5{
+                    font-size: 14px;
+                }
+
+                .skew {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position:absolute;
+                width: 50px;
+                height: 20px;
+                left: 180px;
+                transform: translateX(-50%);
+                margin-top:-600px;
+                z-index:9999;
+            
+            }
+
+                .insk {
+                    margin-top:10px;
+                    flex-direction: row;
+                    text-align: center;
+                    justify-content: center;
+                    position: absolute;
+                    width: 24px;
+                    height: 24px;
+                }
+
+                .s1 {
+                    position: absolute;
+                    width: 24px;
+                    height: 2px;
+                    opacity: 0;
+                    transform: scale3d(1);
+                    animation: move 3s ease-out infinite;
+                }
+
+                .s1:first-child{
+                    animation: move 3s ease-out 1s infinite;
+                }
+
+                .s1:before,
+                .s1:after {
+                    content: ' ';
+                    position: absolute;
+                    top: 0;
+                    height: 100%;
+                    width: 50%;
+                    background: linear-gradient(0deg, #0B3D7B, #b0dea6);
+                }
+
+                .s1:before {
+                    left: 0;
+                    transform: skew(0deg, -30deg);
+                }
+
+                .s1:after {
+                    right: 0;
+                    width: 50%;
+                    transform: skew(0deg, 30deg);
+                }
+
+                @keyframes move {
+                25% {
+                    opacity: 1;
+
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-20px) scale3d(0.5, 0.5, 0.5);
+                }
+            }
+
+                @keyframes pulse {
+                    to {
+                        opacity: 1;
+                    }
+                }
+
+        </style>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+    </div>
+        <div class="phone">
+             <h1>Week</h1>
+            
+             <div id="date"></div>
+
+             <div class="dd">
+                <div class="item">
+                    <h2>S</h2>
+                    <p>17</p>
+                </div>
+                 <div class="item">
+                     <h2>M</h2>
+                     <p>18</p>
+                 </div>
+                 <div class="item">
+                    <h2>T</h2>
+                    <p>19</p>
+                </div>
+                <div class="item">
+                    <h2>W</h2>
+                    <p>20</p>
+                </div>
+                <div class="item">
+                    <h2>T</h2>
+                    <p>21</p>
+                </div>
+                <div class="item">
+                     <h2>F</h2>
+                     <p>22</p>
+                 </div>
+                 <div class="item">
+                    <h2>S</h2>
+                    <p>23</p>
+                </div>
+             </div>
+
+             <div class="middle">
+                 <div class="ww">
+                    <img id="icon"></img>
+                    <div id="weather"></div>
+                    <div id="temp_minmax"></div>
+                    <div class="line"></div>
+                    <div id="city"></div>
+
+                    <div id="sunrise"></div>
+                    <div id="sunset"></div>
+
+                    <div style="word-break: break-all;">
+                        <div class="fo">기온 추천 의상</div>
+
+                        <div class="plus">
+                            <div class="infor">상의</div>
+                            <div class="infor2"><h4><span>자켓, 가디건, 야상</span></h4></div>
+                        </div>
+                        
+                        <div class="plus">
+                            <div class="infor">하의</div>
+                            <div class="infor3"><h5><span>청바지, 면바지</span></h5></div>
+                        </div>
+                    </div>
+                 </div>
+
+                 <a href="#">
+                    <div class="CC">
+                        <div class="container">
+                        <div class="chevron"></div>
+                        </div>
+                    </div>
+                </a>
+             </div>
+             
+             <div class="box"> 
+                <div class='wave -one'></div>
+                <div class='wave -two'></div>
+                <div class='wave -three'></div>  
+            </div>
+
+                
+                
+        </div>
+        <a class="page3">
+            <div class="skew">
+                <div class="insk">
+                    <div class="s1"></div>
+                    <div class="s1"></div>
+                </div>
+            </div>
+        </a>
+</div>
+
+        <script>
+
+            $(function(){
+                $('.phone').fadeIn(300);
+                $('.page3').click(function(){
+                    $('.phone').fadeOut(300, function(){
+                        window.location.href = '2page.html'
+                    })
+                });
+            
+
+
+                $.getJSON('https://api.openweathermap.org/data/2.5/weather?id=1844045&appid=cbe920e0e02d06d37f867ca4bb45d496&units=metric', function(data){
+
+                    console.log(data);
+
+                    let city = data.name;
+                    let temp = data.main.temp;
+                    let temp_max = data.main.temp_max;
+                    let temp_min = data.main.temp_min;
+                    let weather = data.weather[0].main;
+
+                    let sunrise = data.sys.sunrise;
+                    let sunset = data.sys.sunset;
+
+                    let today = moment();
+                    let date = today.format('YY-MM-DD');
+                    console.log(date);
+
+                    $('#city').text(city);
+                    $('#weather').text(weather);
+                    $('#temp').text(temp + '°');
+                    $('#temp_minmax').text(temp_max + '°' + ' / ' + temp_min + '°' );
+                    $('#date').text(date);
+
+                    let sunrise_dt = moment(sunrise * 1000);
+                    let sunrise_time = sunrise_dt.format('HH:mm');
+                    $('#sunrise').text('일출 '+sunrise_time);
+
+                    let sunset_dt = moment(sunset * 1000);
+                    let sunset_time = sunset_dt.format('HH:mm');
+                    $('#sunset').text('일몰 '+sunset_time);
+
+                    let iconCode = data.weather[0].icon;
+                    $('#icon').attr('src', 'http://openweathermap.org/img/wn/' + iconCode + '@2x.png');
+
+                    if(temp > 28){
+                        $('.infor2 >  span').text('민소매, 반팔')
+                        $('.infor3 > h5 > span').text('반바지, 치마')
+                    }else if(temp > 23){
+                        $('.infor2 > h4 > span').text('반팔, 얇은 셔츠')
+                        $('.infor3 > h5 > span').text('반바지, 면바지')
+                    }else if(temp > 20){
+                        $('.infor2 > h4 > span').text('얇은 가디건, 긴팔티')
+                        $('.infor3 > h5 > span').text('면바지, 청바지')
+                    }else if(temp > 17){
+                        $('.infor2 > h4 > span').text('얇은 니트, 가디건, 맨투맨')
+                        $('.infor3 > h5 > span').text('면바지, 청바지')    
+                    }else if(temp > 12){
+                        $('.infor2 > h4 > span').text('자켓, 가디건, 야상, 맨투맨')
+                        $('.infor3 > h5 > span').text('스타킹, 청바지, 면바지')
+                    }else if(temp > 9){
+                        $('.infor2 > h4 > span').text('트렌치코트, 야상, 니트')
+                        $('.infor3 > h5 > span').text('스타킹, 청바지, 면바지')
+                    }else if(temp > 5){
+                        $('.infor2 > h4 > span').text('코트, 히트텍, 니트')
+                        $('.infor3 > h5 > span').text('청바지, 레깅스')
+                    }else if(temp > 4){
+                        $('.infor2 > h4 > span').text('패딩, 두꺼운코트, 기모 제품')
+                        $('.infor3 > h5 > span').text('기모 레깅스, 골지 바지')
+                    }
+                });
+                   
+                $.getJSON('https://api.openweathermap.org/data/2.5/forecast?id=1844045&appid=cbe920e0e02d06d37f867ca4bb45d496&units=metric', function(data){
+
+                    console.log(data);
+
+                    for(let i=0; i<4; i++){
+                        let dt = data.list[i].dt;
+                        let temp = data.list[i].main.temp;
+                        let weather = data.list[i].weather[0].main;
+                       
+                        // let icon = data.list[i].weather[0].icon;
+                        // $('#icon').attr('src', 'http://openweathermap.org/img/wn/' + icon + '@2x.png');
+
+                        let date = moment(dt * 1000).format('HH:mm');
+
+                        let dom = $('<div class="forecast"></div>');
+                        dom.append('<div>' + date + '</div>');
+                        dom.append('<div>' + weather + '</div>');
+                        // dom.append('<icon></icon>');
+                        dom.append('<div>' + temp +  '°' + '</div>');
+                       
+
+                        $('#forecast').append(dom);
+                    }    
+                });
+
+                $('.CC .container').click(function(){
+                    console.log("open")
+                    $('.middle').toggleClass('open')
+                })
+            });
+            
+        
+
+            
+        </script>
+    </body>
+</html>
